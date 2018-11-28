@@ -1,6 +1,7 @@
 #ifndef ARBRES_H
 #define ARBRES_H
-#define TAILLE_MAX 1000
+#define TAILLE_MAX 10000
+#include "especes.h"
 /* Structure d'un noeud d'arbre */
 struct noeud_s;
 typedef struct noeud_s noeud;
@@ -13,7 +14,7 @@ typedef struct noeud_s noeud;
 typedef noeud* arbre;
 
 struct noeud_s {
-    char* valeur;
+    val_n valeur;
     arbre gauche;
     arbre droit;
 };
