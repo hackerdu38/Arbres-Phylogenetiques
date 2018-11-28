@@ -9,7 +9,7 @@ int DEBUG = 0;
 
 int main(int argc, char* argv[])
 {
-    char *fichier = NULL;
+  char *fichier = NULL;
 	char esp[100];
     
     if (argc < 2) {
@@ -47,12 +47,34 @@ int main(int argc, char* argv[])
         exit(1);
     }
     
-    arbre mon_arbre = lire_arbre (f);
-
+  //printf("Que voulez-vous faire ? \n   [1] : afficher l'arbre\n   [2]afficher la hauteur" 
+  //pourquoi ne pas clarifier un peu ?
+  
+  arbre mon_arbre = lire_arbre (f);
 	affiche_arbre (mon_arbre);    
- 
-    printf ("Hauteur de l'arbre: %d\n", hauteur (mon_arbre));
-    
+  printf ("Hauteur de l'arbre: %d\n", hauteur (mon_arbre));
+  
+  
+  //caractérististiques sur une profondeur.
+  int pr;
+	liste_t* caracts = malloc(sizeof(*caracts));
+  printf("entrez la profondeur dont vous voulez obtenir les caractéristiques : (entier)\n");
+	scanf("%d", &pr);
+	
+	// récupération des caractéristiques dans caracts
+	caract_profondeur(mon_arbre, pr, caracts); 
+	
+	printf("Les caractéristiques à la profondeur %d sont : \n", pr);
+	cellule_t* caract_courant;
+	caract_courant = caracts->tete;
+	while(caract_courant != NULL){ //Affiche la séquence.
+		printf("%s / ", caract_courant->valeur);
+		caract_courant = caract_courant -> suivant;
+	}
+	printf("\n");
+	
+	
+	
 	
 	printf("Entrez l'espece a rechercher\n");
 	scanf("%s", esp);
