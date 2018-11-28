@@ -46,24 +46,24 @@ void ajouter_debut(char *valeur, liste_t *seq){
 
 
 
-int rechercher_espece (arbre racine, char *espece, liste_t* seq){
+int rechercher_espece (arbre racine, espc *espece){
 /*Pour rechercher et afficher les caractéristiques d'une espèce dans un arbre.
 On renvoie un entier selon si l'on a trouvé ou non l'espèce dans l'arbre.*/
 
 	if (racine == NULL){ //Si l'arbre est vide, l'espece n'y appartient pas
 		return 0;
 	}
-	else if (!(strcmp(racine->valeur.nom, espece))){ //Si l'on trouve l'espèce
+	else if (!(strcmp(racine->valeur.nom, espece->nom))){ //Si l'on trouve l'espèce
 		return 1;
 	}
 	else { //On effectue un appel récursif de la fonction.
 		int trouve_a_gauche,trouve_a_droite;
-		trouve_a_gauche = rechercher_espece(racine->gauche, espece, seq);
-		trouve_a_droite = rechercher_espece(racine->droit, espece, seq);
+		trouve_a_gauche = rechercher_espece(racine->gauche, espece);
+		trouve_a_droite = rechercher_espece(racine->droit, espece);
 		if (trouve_a_gauche) return 1;
 		if (trouve_a_droite) {
 		//On n'ajoute l'élément à la liste que si l'espèce se trouve à droite, celà signifie qu'elle possède bien cette caractéristique, si on trouve l'espece a gauche de l'élément, cela signifie qu'elle ne possède pas la caractéristique et qu'il ne faut pas l'ajouter à la séquence.
-			ajouter_debut(racine->valeur.nom,seq) ;
+			ajouter_debut(racine->valeur.nom, &(espece->caract)) ;
 			return 1;
 		}
 	}

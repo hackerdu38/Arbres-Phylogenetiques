@@ -19,5 +19,3 @@ typedef struct liste liste_t;
 
 
 #endif /* _LISTES_H */
-
-

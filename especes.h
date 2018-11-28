@@ -1,7 +1,7 @@
 /* Structures de données autour des espèces */
 #ifndef _ESPECE_H_
 #define _ESPECE_H_
-
+#include "listes.h"
 enum type {ESPECE, CARACT} ;
 
 typedef struct {
@@ -11,7 +11,8 @@ typedef struct {
 
 typedef struct {
   char nom[100];
-  char caract[100][100];
-} espece;
+  liste_t caract;
+} espc;
 
+espc creer_espece(char *nom);
 #endif
