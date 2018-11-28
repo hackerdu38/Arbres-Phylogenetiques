@@ -54,6 +54,7 @@ On renvoie un entier selon si l'on a trouvé ou non l'espèce dans l'arbre.*/
 		return 0;
 	}
 	else if (!(strcmp(racine->valeur.nom, espece->nom))){ //Si l'on trouve l'espèce
+		if (!est_espece(racine->valeur)) printf("Ce que vous recherchez n'est pas une espece.\n");
 		return 1;
 	}
 	else { //On effectue un appel récursif de la fonction.

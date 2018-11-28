@@ -15,4 +15,5 @@ typedef struct {
 } espc;
 
 espc creer_espece(char *nom);
+int est_espece(val_n esp);
 #endif
