@@ -29,21 +29,22 @@ int hauteur (arbre racine){
  * Définissez un type de retour approprié !
  */
 
-void ajouter_debut(char *valeur, liste_t *seq){
-//Fonction qui ajoute une cellule au début d'une liste chaînée donc la valeur est passée en argument.
-	cellule_t* new = malloc(sizeof(*new));
-	new->valeur = valeur;
-	if (seq -> tete == NULL){
-		seq->tete = new;
-		new->suivant = NULL;
-	}else{
-		new->suivant= (seq->tete);
-		seq->tete = new;
+void construire_arbre(arbre a, espc espece){
+	if ((espece.caract).tete == NULL){
+		noeud * n = nouveau_noeud();
+		strcpy(n->valeur.nom, espece.nom);
+		(n->valeur).nature=ESPECE;
+		a = n;
 	}
-	cellule_t* courant;
-	courant = seq->tete;
+	else {
+		noeud * n = nouveau_noeud();
+		strcpy(n->valeur.nom, (espece.caract.tete)->valeur);
+		(n->valeur).nature=CARACT;
+		supprimer_caract((espece.caract.tete)->valeur,&(espece.caract));
+		a= n;
+		construire_arbre(a->droit, espece);
+	}
 }
-
 
 
 int rechercher_espece (arbre racine, espc *espece){
@@ -75,4 +76,25 @@ On renvoie un entier selon si l'on a trouvé ou non l'espèce dans l'arbre.*/
 /* Ajoute une espèce à un arbre, renvoie
  */
 
-int ajouter_espece ();
+int ajouter_espece (arbre a, espc espece){
+	if (a==NULL){
+		printf("construire_arbre\n");
+		construire_arbre(a, espece);
+		return 1;
+	}
+	else if (a->valeur.nature == ESPECE) {
+		printf("Une espèce (%s) a déjà ces caractéristiques !", a->valeur.nom);
+		return 0;
+	}
+	else {
+		printf("noeud\n");
+		if (appartient(a->valeur.nom, &(espece.caract))){
+			printf("appartient ok : %s\n", a->valeur.nom);
+			supprimer_caract(a->valeur.nom, &(espece.caract));
+			return ajouter_espece(a->droit, espece);
+		}
+		else return ajouter_espece(a->gauche, espece);
+
+	}
+	printf("finnn\n");
+}

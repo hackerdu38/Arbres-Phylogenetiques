@@ -68,6 +68,24 @@ int main(int argc, char* argv[])
 	}
 	printf("\n");
 
+  printf("Entrez le nom de l'espèce à ajouter :\n");
+  char espaj[100];
+  fscanf(stdin,"%s", espaj);
+  printf("Entrez le nombre de caractéristiques de l'espèce :\n");
+  int nb;
+  fscanf(stdin,"%d", &nb);
+  espc espece_a_ajouter = creer_espece(espaj);
+  char car[100];
+  printf("Entrez les caractéristiques :\n");
+  for (int i =0; i<nb ; i++){
+    printf("#%d : ", i+1);
+    fscanf(stdin, "%s",car);
+    ajouter_debut(car, &(espece_a_ajouter.caract));
+  }
+  if (ajouter_espece(mon_arbre,espece_a_ajouter)) printf("SUCCESS ! \n");
+  else printf("FAILURE...\n");
 
-    return 0;
+
+
+  return 0;
 }

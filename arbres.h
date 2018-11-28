@@ -6,6 +6,8 @@
 struct noeud_s;
 typedef struct noeud_s noeud;
 
+
+
 /* Un arbre binaire est défini comme une référence vers le noeud racine de l'arbre.
  * Un arbre binaire vide est représenté par une référence NULL.
  * Un arbre binaire est une structure de données récursive.
@@ -18,7 +20,6 @@ struct noeud_s {
     arbre gauche;
     arbre droit;
 };
-
 typedef struct{
 	int longueur;
 	noeud tab[TAILLE_MAX];
