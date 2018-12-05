@@ -76,6 +76,42 @@ On renvoie un entier selon si l'on a trouvé ou non l'espèce dans l'arbre.*/
 /* Ajoute une espèce à un arbre, renvoie
  */
 
+/* ACTE III-B */
+
+void caract_profondeur(arbre racine, int profondeur, liste_t* caracts)
+{
+  /*
+  if hauteur(racine)<profondeur {
+    //dans ce cas on retourne directement 1 sans remplire caracts.
+    return ;
+  }
+  */
+  
+	if (profondeur >= 1) {
+	  //descendre d'un étage à gauche et droite avec profondeur-1
+	  if (racine->gauche !=  NULL) {
+	    caract_profondeur(racine->gauche, profondeur-1, caracts);
+	  }
+	  if (racine->droit !=  NULL) {
+	    caract_profondeur(racine->droit, profondeur-1, caracts);
+	  } 
+	}  
+	if (profondeur == 0) {
+		if (racine->valeur.nature == CARACT){
+		  ajouter_debut(racine->valeur.nom, caracts);
+		}
+		return;
+	}
+}
+
+
+
+
+
+
+
+
+
 int ajouter_espece (arbre * a, espc espece){
 	if ((*a)==NULL){
 		printf("(null) Construction du nouvel arbre...\n");

@@ -10,5 +10,5 @@ CFLAGS=-g -Wall -Wextra
 main: main.o arbresphylo.o arbres.o especes.o listes.o
 
 clean:
-	rm -f main *.o
+	rm -f main *.o $all
 	#

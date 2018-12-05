@@ -2,6 +2,7 @@
 #define ARBRESPHYLO_H
 
 #include "listes.h"
+#include "especes.h"
 
 /* Renvoie la hauteur de l'arbre passé en argument */
 int hauteur (arbre racine);
@@ -13,6 +14,9 @@ int hauteur (arbre racine);
  */
 
  void construire_arbre(arbre * a, espc espece);
+
+//APP III-B
+void caract_profondeur(arbre racine, int profondeur, liste_t * caracts);
 
 int rechercher_espece (arbre racine, espc *espece);
 
