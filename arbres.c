@@ -7,12 +7,14 @@
 
 #include "arbres.h"
 #include "listes.h"
+#include "especes.h"
 
 noeud* nouveau_noeud(void)
 {
     noeud *n = (noeud*)malloc(sizeof(noeud));
     assert (n!=NULL);
-    n->valeur = NULL;
+    (n->valeur).nom = NULL;
+    (n->valeur).nature = 0;
     n->gauche = NULL;
     n->droit  = NULL;
     return n;
@@ -41,14 +43,14 @@ arbre lire_arbre(FILE *f)
     arbre racine;
 
     GLOB(f); /* lit dans next_char le premier caractère non vide */
-    
+
     if (next_char == '/') {
         next_char = ' '; /* on ne garde pas / en mémoire */
         return NULL;
     }
-    
-    
-    
+
+
+
     if (next_char == ')') {
         return NULL;
     }
@@ -72,14 +74,16 @@ arbre lire_arbre(FILE *f)
     *p='\0'; /* on ferme la chaîne de caractères dans le buffer */
 
     racine = nouveau_noeud();
-    racine->valeur = strdup(buffer); /* dupliquer le mot lu */
+    (racine->valeur).nom = strdup(buffer); /* dupliquer le mot lu */
 
     GLOB(f);
 
     if (next_char == ')') {
+        (racine->valeur).nature = ESPECE;
         next_char = ' '; /* on est sur une feuille, on prépare la lecture du prochain nœud */
     }
     else {
+        (racine->valeur).nature = CARACT;
         racine->gauche = lire_arbre (f); /* appel récursif pour le fils gauche */
         racine->droit  = lire_arbre (f); /* idem pour le droit */
 
@@ -111,12 +115,12 @@ void affiche_arbre (noeud *racine){
 		int k = 0;
 		while (k != a_traiter.longueur){ //Tant qu'il y a des éléments dans "a_traiter"
 			if (a_traiter.tab[k].gauche != NULL){ //S'il y a un fils gauche, on écrit l'instruction dans le fichier
-				fprintf(f, "	%s -> %s [label = \"non\"]\n", a_traiter.tab[k].valeur , a_traiter.tab[k].gauche->valeur);
+				fprintf(f, "	%s -> %s [label = \"non\"]\n", a_traiter.tab[k].valeur.nom , a_traiter.tab[k].gauche->valeur.nom);
 				a_traiter.longueur ++; //Puis on ajoute le fils à la séquence d'éléments à traiter
 				a_traiter.tab[a_traiter.longueur -1]= *(a_traiter.tab[k].gauche);
 			}
 			if (a_traiter.tab[k].droit != NULL){ //On fait la même chose pour le fils droit s'il existe
-				fprintf(f, "	%s -> %s [label = \"oui\"]\n", a_traiter.tab[k].valeur , a_traiter.tab[k].droit->valeur);
+				fprintf(f, "	%s -> %s [label = \"oui\"]\n", a_traiter.tab[k].valeur.nom , a_traiter.tab[k].droit->valeur.nom);
 				a_traiter.longueur ++;
 				a_traiter.tab[a_traiter.longueur -1]= *(a_traiter.tab[k].droit);
 			}
@@ -130,24 +134,5 @@ void affiche_arbre (noeud *racine){
 		system("./affichage"); //pour l'affichage avec Graphviz
 	}else{
 		printf("Fichier script 'affichage' inexistant, veuillez procéder à l'affichage à la main");
-	}				
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
