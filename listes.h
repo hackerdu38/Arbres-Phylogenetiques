@@ -25,6 +25,6 @@ cellule_t * creer_cellule(char *nom);
 void ajouter_debut(char *valeur, liste_t *seq);
 void supprimer_caract(char * caract, liste_t *seq);
 int appartient(char * val, liste_t *seq);
-
-
+int stringcomp(char * val1, char * val2);
+void stringcopie(char * val1, char * val2);
 #endif /* _LISTES_H */

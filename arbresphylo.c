@@ -29,20 +29,20 @@ int hauteur (arbre racine){
  * Définissez un type de retour approprié !
  */
 
-void construire_arbre(arbre a, espc espece){
+void construire_arbre(arbre * a, espc espece){
 	if ((espece.caract).tete == NULL){
 		noeud * n = nouveau_noeud();
-		strcpy(n->valeur.nom, espece.nom);
+		n->valeur.nom = strdup(espece.nom);
 		(n->valeur).nature=ESPECE;
-		a = n;
+		*a = n;
 	}
 	else {
 		noeud * n = nouveau_noeud();
-		strcpy(n->valeur.nom, (espece.caract.tete)->valeur);
+		n->valeur.nom = strdup((espece.caract.tete)->valeur);
 		(n->valeur).nature=CARACT;
 		supprimer_caract((espece.caract.tete)->valeur,&(espece.caract));
-		a= n;
-		construire_arbre(a->droit, espece);
+		*a= n;
+		construire_arbre(&((*a)->droit), espece);
 	}
 }
 
@@ -76,25 +76,39 @@ On renvoie un entier selon si l'on a trouvé ou non l'espèce dans l'arbre.*/
 /* Ajoute une espèce à un arbre, renvoie
  */
 
-int ajouter_espece (arbre a, espc espece){
-	if (a==NULL){
-		printf("construire_arbre\n");
+int ajouter_espece (arbre * a, espc espece){
+	if ((*a)==NULL){
+		printf("(null) Construction du nouvel arbre...\n");
 		construire_arbre(a, espece);
 		return 1;
 	}
-	else if (a->valeur.nature == ESPECE) {
-		printf("Une espèce (%s) a déjà ces caractéristiques !", a->valeur.nom);
-		return 0;
+	else if ((*a)->valeur.nature == ESPECE) {
+		if ((espece.caract.tete)==NULL){
+			printf("Une espèce (%s) a déjà ces caractéristiques !\n", (*a)->valeur.nom);
+			return 0;
+		}
+		else {
+			printf("Construction du nouvel arbre...\n");
+			noeud * n = nouveau_noeud();
+			(n->valeur).nom = strdup((espece.caract.tete)->valeur);
+			(n->valeur).nature=CARACT;
+			(n->gauche) = *a ;
+			(n->droit) = NULL ;
+			(*a) = n;
+			supprimer_caract((*a)->valeur.nom, &(espece.caract));
+			construire_arbre(&((*a)->droit), espece);
+			return 1;
+
+		}
 	}
 	else {
-		printf("noeud\n");
-		if (appartient(a->valeur.nom, &(espece.caract))){
-			printf("appartient ok : %s\n", a->valeur.nom);
-			supprimer_caract(a->valeur.nom, &(espece.caract));
-			return ajouter_espece(a->droit, espece);
+		if (appartient((*a)->valeur.nom, &(espece.caract))){
+			//printf("appartient ok : %s\n", (*a)->valeur.nom);
+			supprimer_caract((*a)->valeur.nom, &(espece.caract));
+			//printf("caracteristiques restantes : %s\n", espece.caract.tete->valeur);
+			return ajouter_espece(&((*a))->droit, espece);
 		}
-		else return ajouter_espece(a->gauche, espece);
+		else return ajouter_espece(&((*a)->gauche), espece);
 
 	}
-	printf("finnn\n");
 }

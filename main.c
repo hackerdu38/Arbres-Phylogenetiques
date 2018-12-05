@@ -82,8 +82,8 @@ int main(int argc, char* argv[])
     fscanf(stdin, "%s",car);
     ajouter_debut(car, &(espece_a_ajouter.caract));
   }
-  if (ajouter_espece(mon_arbre,espece_a_ajouter)) printf("SUCCESS ! \n");
-  else printf("FAILURE...\n");
+  if (ajouter_espece(&mon_arbre,espece_a_ajouter)) affiche_arbre (mon_arbre);
+
 
 
 

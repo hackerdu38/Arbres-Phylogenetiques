@@ -12,10 +12,10 @@ int hauteur (arbre racine);
  * type de retour de cette fonction.
  */
 
- void construire_arbre(arbre a, espc espece);
+ void construire_arbre(arbre * a, espc espece);
 
 int rechercher_espece (arbre racine, espc *espece);
 
-int ajouter_espece(arbre a, espc espece);
+int ajouter_espece(arbre * a, espc espece);
 
 #endif

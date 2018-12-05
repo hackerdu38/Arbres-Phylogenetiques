@@ -13,7 +13,7 @@ cellule_t * creer_cellule(char * nom){
 }
 
 void name(char* nom, cellule_t * cel){
-  strcpy(cel->valeur, nom);
+  stringcopie(cel->valeur, nom);
 }
 
 void ajouter_debut(char *valeur, liste_t *seq){
@@ -33,7 +33,7 @@ void ajouter_debut(char *valeur, liste_t *seq){
 void supprimer_caract(char * caract, liste_t *seq){
   cellule_t * courant = seq->tete;
   if (seq->tete ==NULL) return;
-  if (strcmp(courant->valeur,caract)) seq->tete = seq->tete->suivant;
+  if (stringcomp(courant->valeur,caract)) seq->tete = seq->tete->suivant;
   else {
     while (courant->suivant != NULL && strcmp(courant->suivant->valeur,caract)){
       courant = courant->suivant;
@@ -42,18 +42,33 @@ void supprimer_caract(char * caract, liste_t *seq){
   }
 }
 
+int stringcomp(char * val1, char * val2){
+  int i=0;
+  while(val1[i]!=0 && val2[i]!=0){
+    if (val1[i]!= val2[i]) return 0;
+    i++;
+  }
+  return (val1[i]==val2[i]);
+}
+
+void stringcopie(char * val1, char * val2){
+  int i=0;
+  if (val2 == NULL) return;
+  while(val2[i]!=0){
+    val1[i] = val2[i];
+    i++;
+  }
+  val1[i]=0;
+}
 
 int appartient(char * val, liste_t *seq){
   cellule_t * courant = seq->tete;
-  int i;
   if (seq->tete ==NULL) return 0;
   else {
-    while (courant != NULL){
-      i=0;
-      while(val[i]!=0 && (courant->valeur)[i]!=0)
-      if (strcmp(courant->valeur,val)) return 1;
-      courant = courant->suivant;
-    }
+      while (courant != NULL){
+        if (stringcomp(val,courant->valeur)) return 1;
+        courant = courant->suivant;
+      }
     return 0;
   }
 }
