@@ -2,6 +2,7 @@
 #ifndef _ESPECE_H_
 #define _ESPECE_H_
 #define LISTE_CARAC_MAX 100
+#include "listes.h"
 enum type {ESPECE, CARACT} ;
 
 typedef struct {
@@ -11,8 +12,8 @@ typedef struct {
 
 typedef struct {
   char nom[100];
-  char caract[100][100];
-} espece;
+  liste_t caract;
+} espc;
 
 //inutile pour le moment, à utiliser pour ajouter_debut dans arbresphylo.c + propre
 typedef struct {
@@ -20,4 +21,6 @@ typedef struct {
   int l;
 } l_carac;
   
+espc creer_espece(char *nom);
+int est_espece(val_n esp);
 #endif
