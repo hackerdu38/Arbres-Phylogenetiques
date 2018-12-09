@@ -7,14 +7,13 @@
 #include "arbresphylo.h"
 #include "especes.h"
 
-int DEBUG = 0;
 
-void vider_buffer(){
+void vider_buffer(){ //vide la saisie au clavier poue éviter les résidus
 	char c= 0;
 	while (c != '\n'&& c != EOF) c = getchar();
 }
 
-int open(arbre * mon_arbre){
+int open(arbre * mon_arbre){ //ouvre un arbre dans l'arbre courant
   FILE * f ;
   printf("Entrez le chemin du fichier arbre à ouvrir : \n");
   char nom[1000]={0};
@@ -32,14 +31,13 @@ int open(arbre * mon_arbre){
   return 1;
 }
 
-int opentable(arbre * mon_arbre){
-  /*
+int opentable(arbre * mon_arbre){ //ouvre une table de correspondance et la convertit en arbre dans l'arbre courant
+  //ne fonctionne pas (seg fault ici même)
   printf("Entrez le chemin du fichier tableau à ouvrir : \n");
   char nom[1000]={0};
   fscanf(stdin, "%s", nom);
   vider_buffer();
-  table_de_correspondance T = creertablevide();
-  */
+
   table_de_correspondance T = creertablevide();
   if (!(lire_csv("tests/tableau_a_lire.csv", &T))) return 0;
   sequence_int lignes;
@@ -58,7 +56,7 @@ int opentable(arbre * mon_arbre){
 
 }
 
-int ajoutesp(arbre * mon_arbre){
+int ajoutesp(arbre * mon_arbre){ //ajoute une espece dans l'arbre courant
   printf("Entrez le nom de l'espèce à ajouter :\n");
   char espaj[100];
   fscanf(stdin,"%s", espaj);
@@ -79,7 +77,7 @@ int ajoutesp(arbre * mon_arbre){
   return (ajouter_espece(mon_arbre,espece_a_ajouter));
 }
 
-int recherchesp(arbre mon_arbre){
+int recherchesp(arbre mon_arbre){ //recherche une espece dans l'arbre courant
   char esp[100];
   printf("Entrez l'espece a rechercher\n");
 	scanf("%s", esp);
@@ -108,10 +106,8 @@ int main(int argc, char* argv[]) {
   arbre mon_arbre = NULL;
 
   if (argc > 2) { // trop d'arguments
-      fprintf (stderr, "Usage:  %s [-d] <fichier>\n", argv[0]);
+      fprintf (stderr, "Usage:  %s [<fichier_arbre>]\n", argv[0]);
       fprintf (stderr, "\n");
-      fprintf (stderr, "Options:\n");
-      fprintf (stderr, "\t-d\tmode debug\n");
       exit(1);
   }
   else { // on ouvre le fichier passé en argument s'il existe
@@ -129,7 +125,7 @@ int main(int argc, char* argv[]) {
       }
   }
 
-
+  // on lance le mainloop
 
   char commande='n';
   char reponse[100];
@@ -138,7 +134,7 @@ int main(int argc, char* argv[]) {
     fscanf(stdin,"%s", reponse);
     commande = reponse[0];
     vider_buffer();
-    switch(commande){
+    switch(commande){ //on peut manipuler les arbres avec diverses commandes
       case 'o' :
         if (open(&mon_arbre)) printf("Ouverture réussie !\n" );
         break;
