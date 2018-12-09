@@ -96,9 +96,20 @@ int recherchesp(arbre mon_arbre){ //recherche une espece dans l'arbre courant
 }
 
 int ecrire(arbre mon_arbre){
-  /* ---------------------------
-  ---- A COMPLETER -------------
-  ----------------------------*/
+  int ecrire(arbre a){
+  char nom_fichier[100];
+  fprintf(stdout, "Saisissez le nom du fichier à créer/écraser.\n");
+  fscanf(stdin, "%s", nom_fichier);
+  FILE *f =fopen(nom_fichier,"w");
+  fprintf(f,"(");
+  inscription_arbre_fichier(a,f);
+  fprintf(f,")");
+  fclose(f);
+
+  char str[150];
+  strcpy(str, "indent ");
+  strcat(str, nom_fichier);
+  system(str);
   return 1;
 }
 
@@ -142,7 +153,7 @@ int main(int argc, char* argv[]) {
         break;
       case 'u' :
         free(mon_arbre);
-      
+
         printf("Attention : Cette fonction va causer une erreur de segmentation localisée sur un printf().\nNous n'avons pas pu résoudre ce problème et ne pouvons donc même pas tester cette fonction.\n(Entrer un caractère pour continuer...)\n");
         scanf("\n ");
         if (opentable(&mon_arbre)) printf("Ouverture réussie !\n" );
