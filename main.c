@@ -95,47 +95,12 @@ int recherchesp(arbre mon_arbre){ //recherche une espece dans l'arbre courant
   return 1;
 }
 
-//fonction reccursive pour ecrire les noeuds de l'arbre dans le fichier.
-void inscription_arbre_fichier(arbre a, FILE *f){ 
-  if(a!=NULL){ 
-    fprintf(f,"%s",a->valeur.nom); 
-    if(a->gauche !=NULL){ 
-        fprintf(f,"\n  ("); 
-        inscription_arbre_fichier(a->gauche,f); 
-        fprintf(f,")\n"); 
-    } 
-    if(a->droit !=NULL){ 
-      fprintf(f,"  ("); 
-      inscription_arbre_fichier(a->droit,f); 
-      fprintf(f,")\n  "); 
-    } 
-  }
- 
-} 
-
-  
-
-int ecrire(arbre a){ 
-  char nom_fichier[100];
-
-
-  fprintf(stdout, "Saisissez le nom du fichier à créer/écraser.\n");
-  fscanf(stdin, "%s", nom_fichier);
-
-  FILE *f =fopen(nom_fichier,"w");
-
-  fprintf(f,"("); 
-  inscription_arbre_fichier(a,f); 
-  fprintf(f,")"); 
-  fclose(f); 
-  
-  char str[150];
-  strcpy(str, "indent ");
-  strcat(str, nom_fichier);
-  system(str);
+int ecrire(arbre mon_arbre){
+  /* ---------------------------
+  ---- A COMPLETER -------------
+  ----------------------------*/
   return 1;
 }
-
 
 int main(int argc, char* argv[]) {
   arbre mon_arbre = NULL;
@@ -171,9 +136,13 @@ int main(int argc, char* argv[]) {
     vider_buffer();
     switch(commande){ //on peut manipuler les arbres avec diverses commandes
       case 'o' :
+        free(mon_arbre);
+
         if (open(&mon_arbre)) printf("Ouverture réussie !\n" );
         break;
       case 'u' :
+        free(mon_arbre);
+      
         printf("Attention : Cette fonction va causer une erreur de segmentation localisée sur un printf().\nNous n'avons pas pu résoudre ce problème et ne pouvons donc même pas tester cette fonction.\n(Entrer un caractère pour continuer...)\n");
         scanf("\n ");
         if (opentable(&mon_arbre)) printf("Ouverture réussie !\n" );
@@ -196,6 +165,5 @@ int main(int argc, char* argv[]) {
     }
   }
   free(mon_arbre);
-  free(reponse);
   return 0;
 }
