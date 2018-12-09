@@ -104,7 +104,8 @@ void affiche_arbre (noeud *racine){
 //Fonction qui permet l'affichage de l'arbre via Graphviz en utilisant le script "affichage"
 
 	if (racine == NULL){
-		printf("L'arbre est vide");//Il n'y a rien à afficher
+		printf("L'arbre est vide.\n");//Il n'y a rien à afficher
+    return;
 	}else{ //On crée un fichier dans lequel on va écrire les instructions
 		FILE * f;
 		f = fopen("arbre.dot", "w");
@@ -130,7 +131,7 @@ void affiche_arbre (noeud *racine){
 		fclose(f);
 	}
 	if (fopen("affichage", "r") != NULL){
-		printf("Veuillez patienter pour l'affichage de l'arbre.\n Vous pouvez continuer vos opérations en attendant.\n");
+		printf("(affichage) Veuillez patienter pour l'affichage de l'arbre.\n(affichage) Vous pouvez continuer vos opérations en attendant.\n");
 		system("./affichage"); //pour l'affichage avec Graphviz
 	}else{
 		printf("Fichier script 'affichage' inexistant, veuillez procéder à l'affichage à la main");

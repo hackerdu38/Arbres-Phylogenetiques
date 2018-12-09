@@ -25,6 +25,15 @@ typedef struct{
 	noeud tab[TAILLE_MAX];
 }sequence;
 
+typedef struct{
+	int longueur;
+	char tab[TAILLE_MAX][TAILLE_MAX];
+}sequence_str;
+
+typedef struct{
+	int longueur;
+	int tab[TAILLE_MAX];
+}sequence_int;
 
 /* Crée un nouveau nœud et initialize ses champs à null */
 noeud* nouveau_noeud (void);
