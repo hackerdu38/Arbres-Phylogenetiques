@@ -11,7 +11,7 @@ int DEBUG = 0;
 
 void vider_buffer(){
 	char c= 0;
-	while (c != '\n'&& c!= EOF) c= getchar();
+	while (c != '\n'&& c != EOF) c = getchar();
 }
 
 int open(arbre * mon_arbre){
@@ -158,5 +158,7 @@ int main(int argc, char* argv[]) {
       default : break;
     }
   }
+  free(mon_arbre);
+  free(reponse);
   return 0;
 }
