@@ -95,8 +95,25 @@ int recherchesp(arbre mon_arbre){ //recherche une espece dans l'arbre courant
   return 1;
 }
 
-int ecrire(arbre mon_arbre){
-  int ecrire(arbre a){
+
+//fonction reccursive pour ecrire les noeuds de l'arbre dans le fichier.
+void inscription_arbre_fichier(arbre a, FILE *f){ 
+  if(a!=NULL){ 
+    fprintf(f,"%s",a->valeur.nom); 
+    if(a->gauche !=NULL){ 
+        fprintf(f,"\n  ("); 
+        inscription_arbre_fichier(a->gauche,f); 
+        fprintf(f,")\n"); 
+    } 
+    if(a->droit !=NULL){ 
+      fprintf(f,"  ("); 
+      inscription_arbre_fichier(a->droit,f); 
+      fprintf(f,")\n  "); 
+    } 
+  }
+} 
+
+int ecrire(arbre a){
   char nom_fichier[100];
   fprintf(stdout, "Saisissez le nom du fichier à créer/écraser.\n");
   fscanf(stdin, "%s", nom_fichier);
