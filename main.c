@@ -33,12 +33,15 @@ int open(arbre * mon_arbre){
 }
 
 int opentable(arbre * mon_arbre){
+  /*
   printf("Entrez le chemin du fichier tableau à ouvrir : \n");
   char nom[1000]={0};
   fscanf(stdin, "%s", nom);
   vider_buffer();
-  table_de_correspondance T;
-  if (!(lire_csv(nom, &T))) return 0;
+  table_de_correspondance T = creertablevide();
+  */
+  table_de_correspondance T = creertablevide();
+  if (!(lire_csv("tests/tableau_a_lire.csv", &T))) return 0;
   sequence_int lignes;
   for (int i = 0; i< T.noms_esp.longueur ; i++){
     lignes.tab[i]=i;
@@ -103,6 +106,7 @@ int ecrire(arbre mon_arbre){
 
 int main(int argc, char* argv[]) {
   arbre mon_arbre = NULL;
+
   if (argc > 2) { // trop d'arguments
       fprintf (stderr, "Usage:  %s [-d] <fichier>\n", argv[0]);
       fprintf (stderr, "\n");
@@ -139,6 +143,8 @@ int main(int argc, char* argv[]) {
         if (open(&mon_arbre)) printf("Ouverture réussie !\n" );
         break;
       case 'u' :
+        printf("Attention : Cette fonction va causer une erreur de segmentation localisée sur un printf().\nNous n'avons pas pu résoudre ce problème et ne pouvons donc même pas tester cette fonction.\n(Entrer un caractère pour continuer...)\n");
+        scanf("\n ");
         if (opentable(&mon_arbre)) printf("Ouverture réussie !\n" );
         break;
       case 'p':
