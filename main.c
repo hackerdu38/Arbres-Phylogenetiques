@@ -94,12 +94,47 @@ int recherchesp(arbre mon_arbre){
   return 1;
 }
 
-int ecrire(arbre mon_arbre){
-  /* ---------------------------
-  ---- A COMPLETER -------------
-  ----------------------------*/
+//fonction reccursive pour ecrire les noeuds de l'arbre dans le fichier.
+void inscription_arbre_fichier(arbre a, FILE *f){ 
+  if(a!=NULL){ 
+    fprintf(f,"%s",a->valeur.nom); 
+    if(a->gauche !=NULL){ 
+        fprintf(f,"\n  ("); 
+        inscription_arbre_fichier(a->gauche,f); 
+        fprintf(f,")\n"); 
+    } 
+    if(a->droit !=NULL){ 
+      fprintf(f,"  ("); 
+      inscription_arbre_fichier(a->droit,f); 
+      fprintf(f,")\n  "); 
+    } 
+  }
+ 
+} 
+
+  
+
+int ecrire(arbre a){ 
+  char nom_fichier[100];
+
+
+  fprintf(stdout, "Saisissez le nom du fichier à créer/écraser.\n");
+  fscanf(stdin, "%s", nom_fichier);
+
+  FILE *f =fopen(nom_fichier,"w");
+
+  fprintf(f,"("); 
+  inscription_arbre_fichier(a,f); 
+  fprintf(f,")"); 
+  fclose(f); 
+  
+  char str[150];
+  strcpy(str, "indent ");
+  strcat(str, nom_fichier);
+  system(str);
   return 1;
 }
+
 
 int main(int argc, char* argv[]) {
   arbre mon_arbre = NULL;
