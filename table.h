@@ -12,6 +12,7 @@ struct matrice {
 	sequence_str noms_esp;
 };
 
+table_de_correspondance creertablevide();
 int lire_csv(char * nom_fichier, table_de_correspondance *t);
 int recup_max(sequence_int lignes, sequence_int colonnes, table_de_correspondance T);
 void faire_arbre (sequence_int lignes, sequence_int colonnes, table_de_correspondance T, arbre *A);

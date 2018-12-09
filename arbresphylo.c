@@ -29,14 +29,14 @@ int hauteur (arbre racine){
  * Définissez un type de retour approprié !
  */
 
-void construire_arbre(arbre * a, espc espece){
-	if ((espece.caract).tete == NULL){
+void construire_arbre(arbre * a, espc espece){//construit un arbre avec une espece et sa liste de caracteristiques.
+	if ((espece.caract).tete == NULL){//plus de caracteristiques
 		noeud * n = nouveau_noeud();
 		n->valeur.nom = strdup(espece.nom);
 		(n->valeur).nature=ESPECE;
 		*a = n;
 	}
-	else {
+	else {//on ajoute un noeud pour la premiere caracteristique de la sequence, puis on l'enleve de la sequence
 		noeud * n = nouveau_noeud();
 		n->valeur.nom = strdup((espece.caract.tete)->valeur);
 		(n->valeur).nature=CARACT;
@@ -77,38 +77,38 @@ On renvoie un entier selon si l'on a trouvé ou non l'espèce dans l'arbre.*/
  */
 
 int ajouter_espece (arbre * a, espc espece){
-	if ((*a)==NULL){
+	if ((*a)==NULL){ //on est sur un arbre vide, on construit le necessaire pour ajouter l'espece
 		printf("(null) Construction du nouvel arbre...\n");
 		construire_arbre(a, espece);
 		return 1;
 	}
 	else if ((*a)->valeur.nature == ESPECE) {
-		if ((espece.caract.tete)==NULL){
+		if ((espece.caract.tete)==NULL){// on arrive sur une place deja occupee et on a rien pour se differentier
 			printf("Une espèce (%s) a déjà ces caractéristiques !\n", (*a)->valeur.nom);
 			return 0;
 		}
-		else {
+		else { // on arrive sur une place deja occupee mais il nous reste des caracteristiques
 			printf("Construction du nouvel arbre...\n");
 			noeud * n = nouveau_noeud();
-			(n->valeur).nom = strdup((espece.caract.tete)->valeur);
+			(n->valeur).nom = strdup((espece.caract.tete)->valeur); //on ajoute un noeud pour se differentier
 			(n->valeur).nature=CARACT;
-			(n->gauche) = *a ;
+			(n->gauche) = *a ; //on place l'ancien occupant du coté gauche
 			(n->droit) = NULL ;
 			(*a) = n;
 			supprimer_caract((*a)->valeur.nom, &(espece.caract));
-			construire_arbre(&((*a)->droit), espece);
+			construire_arbre(&((*a)->droit), espece); // on s'ajoute du cote droit
 			return 1;
 
 		}
 	}
-	else {
-		if (appartient((*a)->valeur.nom, &(espece.caract))){
+	else { // on est sur un noeud
+		if (appartient((*a)->valeur.nom, &(espece.caract))){ // on verifie si on a la caracteristique
 			//printf("appartient ok : %s\n", (*a)->valeur.nom);
-			supprimer_caract((*a)->valeur.nom, &(espece.caract));
+			supprimer_caract((*a)->valeur.nom, &(espece.caract)); // si oui, on l'enleve de notre sequence et on part à droite
 			//printf("caracteristiques restantes : %s\n", espece.caract.tete->valeur);
 			return ajouter_espece(&((*a))->droit, espece);
 		}
-		else return ajouter_espece(&((*a)->gauche), espece);
+		else return ajouter_espece(&((*a)->gauche), espece); // si non, on part a gauche
 
 	}
 }
