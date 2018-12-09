@@ -108,7 +108,7 @@ void affiche_arbre (noeud *racine){
     return;
 	}else{ //On crée un fichier dans lequel on va écrire les instructions
 		FILE * f;
-		f = fopen("arbre.dot", "w");
+		f = fopen("arbre.dot", "w"); //fichier récupéré plus tard par le script affichage.sh
 		fprintf(f, "digraph arbre { \n");
 		sequence a_traiter; //On fait un parcours en largeur, on stocke tous les etats dans une "file d'attente" sous forme de tableau
 		a_traiter.tab[0]= *racine;
@@ -130,9 +130,9 @@ void affiche_arbre (noeud *racine){
 		fprintf(f,"}");
 		fclose(f);
 	}
-	if (fopen("affichage", "r") != NULL){
+	if (fopen("affichage.sh", "r") != NULL){
 		printf("(affichage) Veuillez patienter pour l'affichage de l'arbre.\n(affichage) Vous pouvez continuer vos opérations en attendant.\n");
-		system("./affichage"); //pour l'affichage avec Graphviz
+		system("./affichage.sh"); //pour l'affichage avec Graphviz
 	}else{
 		printf("Fichier script 'affichage' inexistant, veuillez procéder à l'affichage à la main");
 	}
